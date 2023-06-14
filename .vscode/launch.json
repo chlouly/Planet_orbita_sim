@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'planet_orbits'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=planet_orbits",
+                    "--package=planet_orbits"
+                ],
+                "filter": {
+                    "name": "planet_orbits",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'planet_orbits'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=planet_orbits",
+                    "--package=planet_orbits"
+                ],
+                "filter": {
+                    "name": "planet_orbits",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

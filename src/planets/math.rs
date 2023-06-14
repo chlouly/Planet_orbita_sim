@@ -1,9 +1,7 @@
-pub const DIMENSION : usize = 2;
-pub const DT : f32 = 1.0;
-pub const G : f32 = 6.674e-11;
+use crate::constants::*;
 
 
-pub fn sub(a : [f32; DIMENSION], b : [f32; DIMENSION]) -> [f32; DIMENSION] {
+pub fn sub(a : [f64; DIMENSION], b : [f64; DIMENSION]) -> [f64; DIMENSION] {
     //performs a - b = out
     let mut out = [0.0; DIMENSION];
     for i in 0..DIMENSION {
@@ -13,7 +11,7 @@ pub fn sub(a : [f32; DIMENSION], b : [f32; DIMENSION]) -> [f32; DIMENSION] {
     out
 }
 
-pub fn add(a : [f32; DIMENSION], b : [f32; DIMENSION]) -> [f32; DIMENSION] {
+pub fn add(a : [f64; DIMENSION], b : [f64; DIMENSION]) -> [f64; DIMENSION] {
     //performs a + b = out
     let mut out = [0.0; DIMENSION];
     for i in 0..DIMENSION {
@@ -23,7 +21,7 @@ pub fn add(a : [f32; DIMENSION], b : [f32; DIMENSION]) -> [f32; DIMENSION] {
     out
 }
 
-pub fn mult(a : [f32; DIMENSION], factor : f32) -> [f32; DIMENSION] {
+pub fn mult(a : [f64; DIMENSION], factor : f64) -> [f64; DIMENSION] {
     //performs a * factor = out
     let mut out = [0.0; DIMENSION];
     for i in 0..DIMENSION {
@@ -33,9 +31,9 @@ pub fn mult(a : [f32; DIMENSION], factor : f32) -> [f32; DIMENSION] {
     out
 }
 
-pub fn find_mag(a : [f32; DIMENSION]) -> f32 {
+pub fn find_mag(a : [f64; DIMENSION]) -> f64 {
     //finds the magnitude of a
-    let mut out : f32 = 0.0;
+    let mut out : f64 = 0.0;
     for i in 0..DIMENSION {
         out += a[i] * a[i];
     }
