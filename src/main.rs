@@ -7,8 +7,9 @@ mod constants {
     pub const DIMENSION : usize = 2;
     pub const DT : f64 = 0.000001;
     pub const G : f64 = 6.674e-11;
-    pub const NUM_PLANETS : usize = 3;
+    pub const NUM_PLANETS : usize = 2;
     pub const DURATION : i32 = 1000000000;
+    pub const IGNORE_THRESHOLD : f64 = 0.1;
 }
 
 /*NOTES */
@@ -25,11 +26,11 @@ mod constants {
 
 fn main() {
     let mut planets = initialize();
-    let mut count = 0;
+
+
     //MAIN LOOP
-    for _ in 0..DURATION {
+    for count in 0..DURATION {
         for i in 0..NUM_PLANETS {
-            //planets[i].planet_update_routine(planets);
             let mut force;
             let mut total_force  = [0.0; DIMENSION];
             for j in 0..NUM_PLANETS {
@@ -43,20 +44,16 @@ fn main() {
             planets[i].update_position();
             planets[i].update_velocity(total_force);
         }
-        if count % 1000 == 0 {
-            println!("0 pos [{:.2}, {:.2}] \t1 pos [{:.2}, {:.2}] \t2 pos [{:.2}, {:.2}]", 
-                planets[0].position[0], 
-                planets[0].position[1], 
-                planets[1].position[0], 
-                planets[1].position[1],
-                planets[2].position[0], 
-                planets[2].position[1],
-            );
+        for i in 0..NUM_PLANETS {
+            planets[i].swap_positions();
         }
-        count += 1;
+
+        //printing planet's position
+        if count % 1000 == 0 {print_pos(&planets);}
     }
 
 }
+
 
 pub fn initialize() -> [Planet; NUM_PLANETS] {
 
@@ -64,26 +61,52 @@ pub fn initialize() -> [Planet; NUM_PLANETS] {
 
     let planet0 = Planet::new(
         0,
-        100000000000.0,
+        1000000000000.0,
         [10.0, 0.0],
-        [0.0; DIMENSION],
+        [1.0, 0.0],
     );
 
     let planet1 = Planet::new(
         1,
-        100000000000.0,
+        1000000000000.0,
         [-10.0, 0.0],
-        [0.0; DIMENSION],
+        [-1.0, 0.0],
     );
 
-    let planet2 = Planet::new(
-        1,
-        100000000000.0,
-        [0.0, 10.0],
-        [0.0; DIMENSION],
-    );
+    // let planet2 = Planet::new(
+    //     1,
+    //     100000000000.0,
+    //     [0.0, 10.0],
+    //     [0.0; DIMENSION],
+    // );
 
-    let out : [Planet; NUM_PLANETS]=  [planet0, planet1, planet2];
+    let out : [Planet; NUM_PLANETS]=  [planet0, planet1];
 
     out
 }
+
+
+//Pritning to command line
+pub fn print_pos(planets : &[Planet; NUM_PLANETS]) {
+
+    for i in 0..NUM_PLANETS {
+        print!("{} ", i);
+        print_planet_pos(&(*planets)[i]);
+    }
+    print!("\n");
+}
+
+pub fn print_planet_pos(p : &Planet) {
+    print!("pos [");
+    for i in 0..DIMENSION {
+        print!("{:.2}", (*p).position[i]);
+        if i != (DIMENSION - 1) {
+            print!(", ");
+        }
+    }
+    print!("]\t");
+}
+
+
+
+
